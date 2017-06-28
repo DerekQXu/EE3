@@ -23,8 +23,9 @@ int16_t turningFactor;
 turningFactor = map(analogRead(REC_CENTER), 0, 1023, -100, 100);
 - correction = weightP * err + weightI * integral + weightD * derivative;
 + correction = turningFactor / 100.0 * (weightP * err + weightI * integral + weightD * derivative);
+. . .
 ```
-This code supports diagonal turning for optimal speed. This means that the mouse will go through diagonals whenever required, and turn 90 degrees corners without slowing down much. Regarding the path, the mouse will traverse down straights, and turn whenever it reaches a dead end. Note, after modifications, algorithms, such as floodfill, used to 'solve' the maze are not included. This will up to be left to the specific user to implement.
+This code uses diagonal turning. This means that the mouse will go through diagonals whenever required, and turn 90 degrees corners without slowing down much. Regarding the path, the mouse will traverse down straights, and turn whenever it reaches a dead end. Note, after modifications, algorithms, such as floodfill, used to 'solve' the maze are not included. This will up to be left to the specific user to implement.
 # Results
 The NATCAR successfully navigated a 10 foot straight in ~10 seconds and 3 foot radius loop in ~9 seconds.
 The reconfigured micromouse successfully navigated a 16x16 maze.
