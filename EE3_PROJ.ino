@@ -38,9 +38,9 @@
 
 //note 32 bit baselines needed to store sensor values
 uint32_t baseLine_l, baseLine_c, baseLine_r, baseLine_m, baseLine_total;
-
 uint16_t threshold1, threshold2, threshold, threshold_m;
-int reading;
+
+float correction;
 
 unsigned long init_time;
 
@@ -131,7 +131,7 @@ void setup()
 void loop()
 {
     // for now pError at t = 0 is error at t = 0
-    pError = analogRead(REC_LEFT) - baseline_l - analogRead(REC_RIGHT) + baseline_r;
+    pError = (analogRead(REC_CENTER)*((analogRead(REC_LEFT))/100-(analogRead(REC_RIGHT))/100))-baseLine_total;
     integral = 0;
 
     //calculate dt
@@ -145,7 +145,7 @@ void loop()
     derivative = pError - err;
     integral += 2 * dt * err;
     pError = err;
-    float correction = weightP * err + weightI * integral + weightD * derivative;
+    correction = weightP * err + weightI * integral + weightD * derivative;
 
     //this turns the motors (NOTE: set a good correctionFactor)
     analogWrite(L_MOTOR_S, FORWARD_SPEED + correction * correctionFactor);
