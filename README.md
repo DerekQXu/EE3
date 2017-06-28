@@ -2,7 +2,7 @@
 Final project for EE3 - Introduction to Electrical Engineering. Designed and created an autonomous line following robot (black electrical tape on white background), using infrared sensors. Utilized PID algorithm and H-bridge controls to implement path following. Extra Credit: code also lights up LED when magnet detected using hall-effect sensor. 
 # Reconfiguration for Micro-Mouse
 This code can be reconfigured for a micromouse, a robot with simillar H-bridge and IR sensor layouts, used to traverse mazes.
-One would remove anything related to the hall-effect sensors (for speed) and the following sensor fusion line:
+One would remove anything related to the hall-effect sensors, baseLine_total, and the following sensor fusion lines:
 ```C
 pError = (analogRead(REC_CENTER)*((analogRead(REC_LEFT))/100-(analogRead(REC_RIGHT))/100))-baseLine_total;
 . . .
